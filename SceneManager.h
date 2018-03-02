@@ -10,6 +10,9 @@ class SceneManager {
 	eScene nextScene;
 
 	void ChangeScene() {
+
+		nextScene = empty;
+
 		switch (currentScene) {
 		case TITLE:
 			if (CheckHitKey(KEY_INPUT_RETURN)) {
@@ -43,6 +46,7 @@ class SceneManager {
 			}
 		}
 	}
+	void ChangeScene2(eScene nextScene);
 
 	void DispState() {
 		switch (currentScene) {
@@ -67,12 +71,13 @@ public:
 		scene->Draw();
 	}
 	void Update() {
-
-		//Scene Change
-		ChangeScene();
 		//Scene Update
 		scene->Update();
+		//Scene Change
+		ChangeScene();
 	}
+
+	void Update2();
 
 	void Finalize() {
 		delete scene;

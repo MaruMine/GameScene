@@ -23,4 +23,8 @@ public:
 		DrawBox(x, y, x + width, y + height, color, false);
 	}
 	virtual void Update() = 0;
+	virtual void setPos(int x, int y) {
+		this->x = x;
+		this->y = y;
+	}
 };

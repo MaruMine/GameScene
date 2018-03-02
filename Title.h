@@ -2,8 +2,6 @@
 #include"Scene.h"
 #include"DxLib.h"
 
-int screen[nHeight][nWidth];
-
 class Title : public Scene {
 public:
 	Title() {
@@ -23,5 +21,14 @@ public:
 	}
 	void Update() {
 		
+	}
+
+	eScene Update2() {
+
+		if (CheckHitKey(KEY_INPUT_RETURN)) {
+			return GAME;
+		}
+
+		return empty;
 	}
 };

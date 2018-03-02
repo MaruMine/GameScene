@@ -1,8 +1,14 @@
 #pragma once
 #include"Scene.h"
+#include"Player.h"
 
 class Game : public Scene {
+	Object *player;
 public:
+	Game() {
+		player = new Player();
+		player->setPos(320, 240);
+	}
 	void Draw() {
 		for (int i = 0; i < nHeight; i++) {
 			for (int j = 0; j < nWidth; j++) {
@@ -13,8 +19,18 @@ public:
 				}
 			}
 		}
+
+		player->Draw();
 	}
 	void Update() {
+		player->Update();
+	}
 
+	eScene Update2() {
+		if (CheckHitKey(KEY_INPUT_SPACE)) {
+			return TITLE;
+		}
+
+		return empty;
 	}
 };
