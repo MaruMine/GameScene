@@ -1,5 +1,6 @@
 #pragma once
 #include"DxLib.h"
+#include"Stage.h"
 
 //Object Config
 #define BaseSize 32
@@ -18,6 +19,7 @@ protected:
 	int x, y;
 	int width, height;
 	int color;
+	Stage *stage;
 public:
 	virtual void Draw() {
 		DrawBox(x, y, x + width, y + height, color, false);
@@ -26,5 +28,8 @@ public:
 	virtual void setPos(int x, int y) {
 		this->x = x;
 		this->y = y;
+	}
+	virtual void entryStage(Stage *s) {
+		this->stage = s;
 	}
 };

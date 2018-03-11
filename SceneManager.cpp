@@ -1,22 +1,10 @@
 #include"SceneManager.h"
 
-void SceneManager::ChangeScene2(eScene nextScene) {
-	switch (currentScene) {
-	case TITLE:
-		if (CheckHitKey(KEY_INPUT_RETURN)) {
-			nextScene = GAME;
-		}
-		break;
-	case GAME:
-		if (CheckHitKey(KEY_INPUT_SPACE)) {
-			nextScene = TITLE;
-		}
-		break;
-	default:
-		nextScene = empty;
-		break;
-	}
+/*--------------*/
+/*Private Method*/
+/*--------------*/
 
+void SceneManager::ChangeScene(eScene nextScene) {
 	if (nextScene != empty) {
 		delete scene;
 
@@ -35,7 +23,36 @@ void SceneManager::ChangeScene2(eScene nextScene) {
 	}
 }
 
-void SceneManager::Update2() {
-	nextScene =  scene->Update2();
-	ChangeScene2(nextScene);
+void SceneManager::DispState() {
+	const char *state = "";
+	switch (currentScene) {
+	case TITLE:
+		state = "Title";
+		//DrawString(0, 0, "Title", GREEN);
+		break;
+	case GAME:
+		state = "Game Mode";
+		//DrawString(0, 0, "GAME", GREEN);
+		break;
+	default:
+		break;
+	}
+	DrawString(BaseSize, BaseSize, state, GREEN);
+}
+
+/*-------------*/
+/*Public Method*/
+/*-------------*/
+void SceneManager::Draw() {
+	DispState();
+	scene->Draw();
+}
+
+void SceneManager::Update() {
+	nextScene =  scene->Update();
+	ChangeScene(nextScene);
+}
+
+void SceneManager::Finalize() {
+	delete scene;
 }

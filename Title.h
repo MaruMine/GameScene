@@ -19,11 +19,9 @@ public:
 			}
 		}
 	}
-	void Update() {
-		
-	}
 
-	eScene Update2() {
+
+	eScene Update() {
 
 		if (CheckHitKey(KEY_INPUT_RETURN)) {
 			return GAME;

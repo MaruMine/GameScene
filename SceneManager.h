@@ -9,78 +9,16 @@ class SceneManager {
 	eScene currentScene;
 	eScene nextScene;
 
-	void ChangeScene() {
-
-		nextScene = empty;
-
-		switch (currentScene) {
-		case TITLE:
-			if (CheckHitKey(KEY_INPUT_RETURN)) {
-				nextScene = GAME;
-			}
-			break;
-		case GAME:
-			if (CheckHitKey(KEY_INPUT_SPACE)) {
-				nextScene = TITLE;
-			}
-			break;
-		default:
-			nextScene = empty;
-			break;
-		}
-
-		if (nextScene != empty) {
-			delete scene;
-
-			switch (nextScene) {
-			case TITLE:
-				currentScene = TITLE;
-				scene = new Title();
-				break;
-			case GAME:
-				currentScene = GAME;
-				scene = new Game();
-				break;
-			default:
-				break;
-			}
-		}
-	}
-	void ChangeScene2(eScene nextScene);
-
-	void DispState() {
-		switch (currentScene) {
-		case TITLE:
-			DrawString(0, 0, "Title", GREEN);
-			break;
-		case GAME:
-			DrawString(0, 0, "GAME", GREEN);
-			break;
-		default:
-			break;
-		}
-	}
+	void ChangeScene(eScene nextScene);
+	void DispState();
 
 public:
 	SceneManager() {
 		currentScene = TITLE;
 		scene = new Title();
 	}
-	void Draw() {
-		DispState();
-		scene->Draw();
-	}
-	void Update() {
-		//Scene Update
-		scene->Update();
-		//Scene Change
-		ChangeScene();
-	}
-
-	void Update2();
-
-	void Finalize() {
-		delete scene;
-	}
+	void Draw();
+	void Update();
+	void Finalize();
 	
 };
