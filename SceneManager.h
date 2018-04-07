@@ -8,15 +8,12 @@ class SceneManager {
 	Scene *scene;
 	eScene currentScene;
 	eScene nextScene;
-
-	void ChangeScene(eScene nextScene);
 	void DispState();
-
 public:
-	SceneManager() {
-		currentScene = TITLE;
-		scene = new Title();
-	}
+	SceneManager();
+	~SceneManager();
+
+	void changeScene(Scene *nextScene);
 	void Draw();
 	void Update();
 	void Finalize();
