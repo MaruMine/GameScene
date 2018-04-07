@@ -4,25 +4,6 @@
 /*Private Method*/
 /*--------------*/
 
-void SceneManager::ChangeScene(eScene nextScene) {
-	if (nextScene != empty) {
-		delete scene;
-
-		switch (nextScene) {
-		case TITLE:
-			currentScene = TITLE;
-			scene = new Title();
-			break;
-		case GAME:
-			currentScene = GAME;
-			scene = new Game();
-			break;
-		default:
-			break;
-		}
-	}
-}
-
 void SceneManager::DispState() {
 	const char *state = "";
 	switch (currentScene) {
@@ -43,14 +24,27 @@ void SceneManager::DispState() {
 /*-------------*/
 /*Public Method*/
 /*-------------*/
+
+SceneManager::SceneManager() {
+	scene = new Title(this);
+}
+
+SceneManager::~SceneManager() {
+	delete scene;
+}
+
+void SceneManager::changeScene(Scene *nextScene) {
+	delete scene;
+	scene = nextScene;
+}
+
 void SceneManager::Draw() {
 	DispState();
 	scene->Draw();
 }
 
 void SceneManager::Update() {
-	nextScene =  scene->Update();
-	ChangeScene(nextScene);
+	scene->Update();
 }
 
 void SceneManager::Finalize() {

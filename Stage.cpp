@@ -1,5 +1,7 @@
 #include"Stage.h"
+#include"Camera.h"
 #include"Object.h"
+#include<cassert>
 
 Stage::Stage() {
 	width = nStageWidth;
@@ -19,15 +21,15 @@ Stage::Stage() {
 }
 
 bool Stage::Collision(int x,int y) {
-	if (x < 0 || y < 0 || x / BaseSize > nStageWidth || y / BaseSize > nStageHeight) {
+	//座標が地形の範囲外にあれば衝突判定をせずにfalseを返す
+	bool out_of_range = x <= 0 || y <= 0 || x / BaseSize >= nStageWidth || y / BaseSize >= nStageHeight;
+	//assert(!out_of_range);
+
+	if (out_of_range) {
 		return false;
 	}
 
-	if (Terrain[y / BaseSize][x / BaseSize] == 1) {
-		return true;
-	}
-
-	return false;
+	return Terrain[y / BaseSize][x / BaseSize] == 1;
 }
 
 void Stage::Draw() {
@@ -36,8 +38,7 @@ void Stage::Draw() {
 			if (Terrain[i][j] == 1) {
 				int temp_x = BaseSize * j + 1;
 				int temp_y = BaseSize * i + 1;
-				//DrawBox(temp_x, temp_y, temp_x + BaseSize - 1, temp_y + BaseSize - 1, LBLUE, false);
-				DrawBox(j * BaseSize, i * BaseSize, (j + 1)*BaseSize , (i + 1)*BaseSize ,LBLUE,false);
+				CameraDraw::Box(j * BaseSize, i * BaseSize, (j + 1)*BaseSize , (i + 1)*BaseSize ,LBLUE,false);
 			}
 		}
 	}

@@ -1,4 +1,5 @@
 #include"Game.h"
+#include"SceneManager.h"
 /*--------------*/
 /*Private Method*/
 /*--------------*/
@@ -8,12 +9,24 @@
 /*Public Method*/
 /*-------------*/
 
-Game::Game() {
+Game::Game(){
 	player = new Player();
 	stage = new Stage();
+	enemy = new Hopper();
 
-	player->setPos(320, 32);
+	player->setPos(320, START_POS_Y);
 	player->entryStage(stage);
+	enemy->entryStage(stage);
+}
+
+Game::Game(SceneManager *scmgr) : owner_(scmgr) {
+	player = new Player();
+	stage = new Stage();
+	enemy = new Hopper();
+
+	player->setPos(320, START_POS_Y);
+	player->entryStage(stage);
+	enemy->entryStage(stage);
 }
 
 Game::~Game() {
@@ -22,13 +35,12 @@ Game::~Game() {
 }
 
 void Game::Draw() {
+	enemy->Draw();
 	stage->Draw();
 	player->Draw();
 }
 
-eScene Game::Update() {
-
+void Game::Update() {
+	enemy->Update();
 	player->Update();
-
-	return empty;
 }
