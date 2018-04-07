@@ -1,8 +1,10 @@
 #pragma once
-//StageConfig
+
+//Define
 #define nStageWidth 100
 #define nStageHeight 15
 #define DeadLine 500
+
 
 class Stage {
 	int Terrain[nStageHeight][nStageWidth];

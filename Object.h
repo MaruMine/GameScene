@@ -7,7 +7,7 @@
 #define nWidth 20
 #define nHeight 15
 
-//Color Pattern
+//Color
 #define WHITE GetColor(255,255,255)
 #define RED GetColor(255,0,0)
 #define BLUE GetColor(0,0,255)
