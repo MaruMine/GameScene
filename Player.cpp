@@ -20,20 +20,59 @@ void Player::move() {
 
 
 	x = x + vx;
-
-
 	
+	//左側の壁,天井にぶつかったとき
+	if (stage->Collision(x, y)) {
+		if (vy < 0) {
+			y = y / BaseSize * BaseSize + BaseSize;
+		}
+		if (vx < 0) {
+			x = x / BaseSize * BaseSize;
+		}
+	}
+	//右側の壁,天井にぶつかったとき
+	if (stage->Collision(x + width - 1, y)) {
+		if (vy < 0) {
+			y = y / BaseSize * BaseSize + BaseSize;
+		}
+		if (vx > 0) {
+			x = x / BaseSize * BaseSize;
+		}
+	}
+	//左側の壁,床にぶつかったとき
+	if (stage->Collision(x, y + height - 1)) {
+		if (vy > 0) {
+			vy = 0;
+			jumping = false;
+			y = y / BaseSize * BaseSize;
+		}
+		if (vx < 0 && stage->Collision(x, y)) {
+			x = x / BaseSize * BaseSize + BaseSize;
+		}
+	}
+	//右側の壁,床にぶつかったとき
+	if (stage->Collision(x + width - 1, y + height - 1)) {
+		if (vy > 0) {
+			vy = 0;
+			jumping = false;
+			y = y / BaseSize * BaseSize;
+		}
+		if (vx > 0 && stage->Collision(x + width - 1, y)) {
+			x = x / BaseSize * BaseSize ;
+		}
+	}
+
+	//天井にぶつかったかどうかの判定
+	/*if (vx == 0 && stage->Collision(x, y) || stage->Collision(x + width - 1, y)) {
+		y = y / BaseSize * BaseSize + BaseSize;
+		return;
+	}
 	//床に着いてるかどうかの判定
 	if (stage->Collision(x, y + height - 1) || stage->Collision(x + width - 1, y + height - 1)) {
 		vy = 0;
 		jumping = false;
 		y = y / BaseSize * BaseSize;
 	}
-	
-	
-
-	
-
 	//左側の壁にぶつかってるかの判定
 	if (stage->Collision(x, y) || stage->Collision(x, y + height - 1)) {
 		x = x / BaseSize * BaseSize + BaseSize;
@@ -42,18 +81,7 @@ void Player::move() {
 	//右側の壁にぶつかってるかの判定
 	if (stage->Collision(x + width - 1, y) || stage->Collision(x + width - 1, y + height - 1)) {
 		x = x / BaseSize * BaseSize;
-	}
-	//天井にぶつかったかどうかの判定
-	if (vx == 0 && stage->Collision(x, y) || stage->Collision(x + width - 1, y)) {
-		y = y / BaseSize * BaseSize + BaseSize;
-		return;
-	}
-
-	//x = x + vx;
-
-
-	
-
+	}*/
 	if (CheckHitKey(KEY_INPUT_Z) && !jumping) {
 		F = -20;
 		jumping = true;
@@ -86,10 +114,11 @@ Player::Player(){
 	vx = 0;
 	vy = 0;
 	F = 1;
-	width = BaseSize * 2;
+	width = BaseSize;
 	height = BaseSize;
 }
 void Player::Draw() {
+	DrawFormatString(0, 0, 0xffffff, "VY = %d", vy);
 	CameraDraw::Box(x, y, x + width, y + height, GREEN, false);
 }
 
